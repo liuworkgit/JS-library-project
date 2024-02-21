@@ -1,4 +1,9 @@
-# User Stories
+# JS Library Project
+This is a webpage that allows the user to add, delete and modify the "have read" status of various books added.
+
+This project was made according to the specifications of [The Odin Project's Library Project, which you can access here.](https://www.theodinproject.com/lessons/node-path-javascript-library)
+
+## User Stories
 This project will have the following functionality:
 
 1. It will display all the stored books on the webpage
