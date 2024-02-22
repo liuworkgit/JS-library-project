@@ -1,0 +1,13 @@
+* {
+    font-family: Cambria;
+}
+
+#book-display {
+    width: 80%;
+}
+
+#new-book-submission {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
