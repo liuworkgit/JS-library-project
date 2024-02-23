@@ -18,6 +18,17 @@ function Book(title, author, pageNum) {
 }
 
 /**
+ * Converts user input into a Book object
+ */
+function inputToObject() {
+    const submitForm = document.getElementById("submit-form");
+    const formData = new FormData(submitForm);
+    const formDataObject = Object.fromEntries(formData.entries());
+}
+
+/**
  * Adds a book to the library
  */
-function addBookToLibrary() {}
+function addBookToLibrary() {
+    
+}
