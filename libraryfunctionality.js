@@ -21,14 +21,21 @@ function Book(title, author, pageNum) {
  * Converts user input into a Book object
  */
 function inputToObject() {
-    const submitForm = document.getElementById("submit-form");
-    const formData = new FormData(submitForm);
-    const formDataObject = Object.fromEntries(formData.entries());
+    const form = document.getElementById("submit-form");
+    const formData = new FormData(form);
+
+    let book = new Book(
+        formData[title], 
+        formData[author],
+        formData[pageNum]
+    );
+
+    return book;
 }
 
 /**
  * Adds a book to the library
  */
 function addBookToLibrary() {
-    
+    library.push(inputToObject());
 }
