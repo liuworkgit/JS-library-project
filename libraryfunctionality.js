@@ -39,3 +39,5 @@ function inputToObject() {
 function addBookToLibrary() {
     library.push(inputToObject());
 }
+
+module.exports = { addBookToLibrary }
