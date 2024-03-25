@@ -1,24 +1,29 @@
 'use strict'
 
 let library = [];
+let book1 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
+let book2 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
+library.push(book1);
+library.push(book2);
 
 /**
  * object constructor for a book object
  * 
- * @param {*} title - the title of the book
- * @param {*} author - the author of the book
- * @param {*} pageNum - the number of pages in the book
+ * @param {*} t - the title of the book
+ * @param {*} a - the author of the book
+ * @param {*} pn - the number of pages in the book
  * readStatus - whether or not the book has been read. By default this is false
  */
-function Book(title, author, pageNum) {
-    this.title = title;
-    this.author = author;
-    this.pageNum = pageNum;
+function Book(t, a, pn) {
+    this.title = t;
+    this.author = a;
+    this.pageNum = pn;
     this.readStatus = false;
 }
 
 /**
  * Converts user input into a Book object
+ * FIX LATER
  */
 function inputToObject() {
     const form = document.getElementById("submit-form");
@@ -35,43 +40,36 @@ function inputToObject() {
 
 /**
  * Adds a book to the library
+ * FIX LATER
  */
 function addBookToLibrary() {
     library.push(inputToObject());
 }
 
 /**
- * loops through the testLibrary array and displays
+ * loops through the library array and displays
  * its contents on the webpage
  */
 function displayBooks() {
-    if (testLibrary != []) {
-        for (let book in testLibrary) {
-            let newEntry = document.createElement("div");
+    if (library != []) {
+        for (let book of library) {
+            let newEntry = document.createElement("p");
+            document.getElementById("book-display").appendChild(newEntry);
             newEntry.className = "book-entry";
 
-            newEntry.getElementsByClassName("book-title") = book.title;
-            newEntry.getElementsByClassName("book-author") = book.author;
-            newEntry.getElementsByClassName("book-num-pages") = "Number of pages:" 
-            + (book.pageNum).toString();
-
-            document.getElementById("book-display").appendChild(newEntry);
+            if (book.readStatus == true) {
+                newEntry.innerHTML = book.title + 
+                " - " + book.author + 
+                " - " + book.pageNum + 
+                " - has been read";
+            } else {
+                newEntry.innerHTML = book.title + 
+                " - " + book.author + 
+                " - " + book.pageNum + 
+                " - hasn't been read";
+            }
         }
     }
 }
 
-// temporary library for testing purposes
-let testLibrary = [];
-book1 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
-book2 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
-testLibrary.push(book1);
-testLibrary.push(book2);
-
-// TEST BUTTON
-let button = document.getElementById("testbutton");
-button.addEventListener("click", function () {
-    displayBooks();
-    console.log("button pressed!");
-}, false);
-
-module.exports = { addBookToLibrary }
+displayBooks();
