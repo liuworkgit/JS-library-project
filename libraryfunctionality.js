@@ -72,4 +72,23 @@ function displayBooks() {
     }
 }
 
-displayBooks();
+/**
+ * prevents the submission form from sending to a server
+ * when a new book is submitted. This is because there is 
+ * no server currently.
+ */
+function beforeAddBook(event) {
+    event.preventDefault();
+    addBookToLibrary();
+    // not sure how to implement refreshing
+    // the library display each time a book is added.
+    // makes most sense to just call displayBooks again
+    displayBooks();
+}
+
+// get submit button from webpage form
+// give it an event listener that calls add book to library
+// use preventDefault to stop it from sending to server
+// we will assume that all form fields are filled in before
+// submission - implement later
+document.getElementById("submit-button").addEventListener("click", beforeAddBook, false);
