@@ -3,6 +3,7 @@
 let library = [];
 let book1 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
 let book2 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
+book2.readStatus = true;
 library.push(book1);
 library.push(book2);
 
@@ -47,23 +48,35 @@ function addBookToLibrary() {
  */
 function displayBooks() {
     if (library != []) {
-        for (let book of library) {
-            let newEntry = document.createElement("p");
-            document.getElementById("book-display").appendChild(newEntry);
-            newEntry.className = "book-entry";
-
-            if (book.readStatus == true) {
-                newEntry.innerHTML = book.title + 
-                " - " + book.author + 
-                " - " + book.pageNum + 
-                " - has been read";
-            } else {
-                newEntry.innerHTML = book.title + 
-                " - " + book.author + 
-                " - " + book.pageNum + 
-                " - hasn't been read";
-            }
+        for (let i = 0; i < library.length; i++) {
+            showBook(i);
         }
+    }
+}
+
+/**
+ * Displays the book associated with the given index.
+ * REQUIREMENTS:
+ * - library.length > 0
+ * - index is within range [0, library.length]
+ */
+function showBook(index) {
+    const book = library[index];
+
+    let newEntry = document.createElement("p");
+    document.getElementById("book-display").appendChild(newEntry);
+    newEntry.className = "book-entry";
+
+    if (book.readStatus == true) {
+        newEntry.innerHTML = book.title + 
+        " - " + book.author + 
+        " - " + book.pageNum + 
+        " - has been read";
+    } else {
+        newEntry.innerHTML = book.title + 
+        " - " + book.author + 
+        " - " + book.pageNum + 
+        " - hasn't been read";
     }
 }
 
@@ -78,7 +91,7 @@ function beforeAddBook(event) {
     // not sure how to implement refreshing
     // the library display each time a book is added.
     // makes most sense to just call displayBooks again
-    displayBooks();
+    showBook(library.length - 1);
 }
 
 // get submit button from webpage form
@@ -87,3 +100,5 @@ function beforeAddBook(event) {
 // we will assume that all form fields are filled in before
 // submission - implement later
 document.getElementById("submit-button").addEventListener("click", beforeAddBook, false);
+
+displayBooks();
