@@ -23,24 +23,19 @@ function Book(t, a, pn) {
 
 /**
  * Converts user input into a Book object
- * FIX LATER
  */
 function inputToObject() {
     const form = document.getElementById("submit-form");
     const formData = new FormData(form);
+    console.log(formData);
 
-    let book = new Book(
-        formData[title], 
-        formData[author],
-        formData[pageNum]
-    );
+    let book = new Book(formData.get("title"), formData.get("author"), formData.get("pageNum"));
 
     return book;
 }
 
 /**
  * Adds a book to the library
- * FIX LATER
  */
 function addBookToLibrary() {
     library.push(inputToObject());
