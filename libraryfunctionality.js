@@ -4,6 +4,7 @@ let library = [];
 let book1 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
 let book2 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
 book2.readStatus = true;
+book2.indexnum = 1;
 library.push(book1);
 library.push(book2);
 
@@ -14,12 +15,14 @@ library.push(book2);
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
  * readStatus - whether or not the book has been read. By default this is false
+ * indexnum - the id number of the current book. By default this is 0
  */
 function Book(t, a, pn) {
     this.title = t;
     this.author = a;
     this.pageNum = pn;
     this.readStatus = false;
+    this.indexnum = 0;
 }
 
 /**
@@ -31,7 +34,7 @@ function inputToObject() {
     console.log(formData);
 
     let book = new Book(formData.get("title"), formData.get("author"), formData.get("pageNum"));
-
+    book.indexnum = library.length;
     return book;
 }
 
@@ -66,6 +69,7 @@ function showBook(index) {
     let newEntry = document.createElement("p");
     document.getElementById("book-display").appendChild(newEntry);
     newEntry.className = "book-entry";
+    newEntry.setAttribute("data-indexnum", book.indexnum);
 
     if (book.readStatus == true) {
         newEntry.innerHTML = book.title + 
