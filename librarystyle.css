@@ -11,3 +11,7 @@
     top: 0;
     right: 0;
 }
+
+.book-entry > * {
+    display: inline-block;
+}

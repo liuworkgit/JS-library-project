@@ -1,12 +1,13 @@
 'use strict'
 
 let library = [];
-let book1 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
-let book2 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
-book2.readStatus = true;
-book2.indexnum = 1;
-library.push(book1);
-library.push(book2);
+let book4 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
+let book5 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
+book4.indexnum = 4;
+book5.readStatus = true;
+book5.indexnum = 5;
+library.push(book4);
+library.push(book5);
 
 /**
  * object constructor for a book object
