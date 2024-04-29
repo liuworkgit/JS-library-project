@@ -1,13 +1,13 @@
 'use strict'
 
 let library = [];
-let book4 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
-let book5 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
-book4.indexnum = 4;
-book5.readStatus = true;
-book5.indexnum = 5;
-library.push(book4);
-library.push(book5);
+// let book4 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
+// let book5 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
+// book4.indexnum = 4;
+// book5.readStatus = true;
+// book5.indexnum = 5;
+// library.push(book4);
+// library.push(book5);
 
 /**
  * object constructor for a book object
@@ -67,22 +67,30 @@ function displayBooks() {
 function showBook(index) {
     const book = library[index];
 
-    let newEntry = document.createElement("p");
-    document.getElementById("book-display").appendChild(newEntry);
-    newEntry.className = "book-entry";
-    newEntry.setAttribute("data-indexnum", book.indexnum);
+    // create div container and the book info paragraph that fits in it
+    let newEntry = document.createElement("div");
+    let newEntryChild = document.createElement("p");
 
     if (book.readStatus == true) {
-        newEntry.innerHTML = book.title + 
+        newEntryChild.innerHTML = book.title + 
         " - " + book.author + 
         " - " + book.pageNum + 
         " - has been read";
     } else {
-        newEntry.innerHTML = book.title + 
+        newEntryChild.innerHTML = book.title + 
         " - " + book.author + 
         " - " + book.pageNum + 
         " - hasn't been read";
     }
+
+    // attach p to div
+    newEntry.appendChild(newEntryChild);
+    newEntryChild.className = "book-entry-text";
+
+    // attach div to document
+    document.getElementById("book-display").appendChild(newEntry);
+    newEntry.className = "book-entry";
+    newEntry.setAttribute("data-indexnum", book.indexnum);
 }
 
 /**
@@ -97,6 +105,21 @@ function beforeAddBook(event) {
     // the library display each time a book is added.
     // makes most sense to just call displayBooks again
     showBook(library.length - 1);
+}
+
+/**
+ * Deletes the book associated with the given id number from
+ * the library.
+ * Requires: 0 <= id < library.length
+ */
+function deleteBook(id) {
+    delete library[id];
+    if (library != []) {
+        for (let i = id; i < library.length - 1; i++) {
+            library[i] = library[i + 1];
+        }
+        library.length = library.length - 1;
+    }
 }
 
 // get submit button from webpage form
