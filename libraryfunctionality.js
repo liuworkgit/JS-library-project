@@ -69,23 +69,30 @@ function showBook(index) {
 
     // create div container and the book info paragraph that fits in it
     let newEntry = document.createElement("div");
-    let newEntryChild = document.createElement("p");
+    let newEntryDesc = document.createElement("p");
+    let newDeleteButton = document.createElement("button");
 
     if (book.readStatus == true) {
-        newEntryChild.innerHTML = book.title + 
+        newEntryDesc.innerHTML = book.title + 
         " - " + book.author + 
         " - " + book.pageNum + 
         " - has been read";
     } else {
-        newEntryChild.innerHTML = book.title + 
+        newEntryDesc.innerHTML = book.title + 
         " - " + book.author + 
         " - " + book.pageNum + 
         " - hasn't been read";
     }
 
     // attach p to div
-    newEntry.appendChild(newEntryChild);
-    newEntryChild.className = "book-entry-text";
+    newEntry.appendChild(newEntryDesc);
+    newEntryDesc.className = "book-entry-text";
+
+    // attach delete button to div
+    newEntry.appendChild(newDeleteButton);
+    newDeleteButton.type = "button";
+    newDeleteButton.className = "delete-button";
+    newDeleteButton.innerHTML = "Delete Book";
 
     // attach div to document
     document.getElementById("book-display").appendChild(newEntry);
