@@ -59,7 +59,8 @@ function displayBooks() {
 }
 
 /**
- * Displays the book associated with the given index.
+ * Displays the book associated with the given index by converting
+ * the JS object into an HTML element and adding it to the DOM.
  * REQUIREMENTS:
  * - library.length > 0
  * - index is within range [0, library.length]
@@ -93,6 +94,7 @@ function showBook(index) {
     newDeleteButton.type = "button";
     newDeleteButton.className = "delete-button";
     newDeleteButton.innerHTML = "Delete Book";
+    newDeleteButton.addEventListener("click", deleteBook, false);
 
     // attach div to document
     document.getElementById("book-display").appendChild(newEntry);
@@ -129,11 +131,22 @@ function deleteBook(id) {
     }
 }
 
-// get submit button from webpage form
-// give it an event listener that calls add book to library
-// use preventDefault to stop it from sending to server
-// we will assume that all form fields are filled in before
-// submission - implement later
+// /**
+//  * Gives deleteBook access to the associated book's id
+//  * so it can delete it.
+//  * Requires: 0 <= id < library.length
+//  */
+// function beforeDeleteBook() {
+//     deleteBook()
+// }
+
+/**
+ * get submit button from webpage form
+ * give it an event listener that calls add book to library
+ * use preventDefault to stop it from sending to server
+ * we will assume that all form fields are filled in before
+ * submission - implement later
+ */
 document.getElementById("submit-button").addEventListener("click", beforeAddBook, false);
 
 displayBooks();
