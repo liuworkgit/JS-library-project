@@ -1,13 +1,16 @@
 'use strict'
 
 let library = [];
-// let book4 = new Book("A Court of Thorns and Roses", "Sarah J. Maas", 300);
-// let book5 = new Book("Dogman Unleashed", "Dav Pilkey", 150);
-// book4.indexnum = 4;
-// book5.readStatus = true;
-// book5.indexnum = 5;
-// library.push(book4);
-// library.push(book5);
+let book1 = new Book("Shadow of the Gods", "John Gwynne", 500);
+let book2 = new Book("Sun and Moon", "Bran Underwood", 1029);
+let book3 = new Book("Placeholder", "Placeholder", 123);
+let book4 = new Book("Placeholder", "Placeholder", 123);
+let book5 = new Book("Placeholder", "Placeholder", 123);
+book2.indexnum = 1;
+book3.indexnum = 2;
+book4.indexnum = 3;
+book5.indexnum = 4;
+library.push(book1, book2, book3, book4, book5);
 
 /**
  * object constructor for a book object
@@ -15,8 +18,8 @@ let library = [];
  * @param {*} t - the title of the book
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
- * readStatus - whether or not the book has been read. By default this is false
- * indexnum - the id number of the current book. By default this is 0
+ * @field readStatus - whether or not the book has been read. By default this is false
+ * @field indexnum - the id number of the current book. By default this is 0
  */
 function Book(t, a, pn) {
     this.title = t;
@@ -24,6 +27,14 @@ function Book(t, a, pn) {
     this.pageNum = pn;
     this.readStatus = false;
     this.indexnum = 0;
+}
+
+/**
+ * Defines an id number getter for the Book prototype
+ * Returns the book's id number.
+ */
+Book.prototype.getIndexNum = function() {
+    return this.indexnum;
 }
 
 /**
@@ -89,17 +100,20 @@ function showBook(index) {
     newEntry.appendChild(newEntryDesc);
     newEntryDesc.className = "book-entry-text";
 
+    // attach div to document
+    document.getElementById("book-display").appendChild(newEntry);
+    newEntry.className = "book-entry";
+    newEntry.setAttribute("data-indexnum", book.indexnum);
+
     // attach delete button to div
     newEntry.appendChild(newDeleteButton);
     newDeleteButton.type = "button";
     newDeleteButton.className = "delete-button";
     newDeleteButton.innerHTML = "Delete Book";
-    newDeleteButton.addEventListener("click", deleteBook, false);
-
-    // attach div to document
-    document.getElementById("book-display").appendChild(newEntry);
-    newEntry.className = "book-entry";
-    newEntry.setAttribute("data-indexnum", book.indexnum);
+    newDeleteButton.addEventListener("click", function () {
+        deleteBook(this.parentElement.getAttribute("data-indexnum"));
+        document.getElementById("book-display").removeChild(this.parentElement);
+    }, false);    
 }
 
 /**
@@ -122,13 +136,7 @@ function beforeAddBook(event) {
  * Requires: 0 <= id < library.length
  */
 function deleteBook(id) {
-    delete library[id];
-    if (library != []) {
-        for (let i = id; i < library.length - 1; i++) {
-            library[i] = library[i + 1];
-        }
-        library.length = library.length - 1;
-    }
+    library.splice(id, 1);
 }
 
 // /**
@@ -137,7 +145,7 @@ function deleteBook(id) {
 //  * Requires: 0 <= id < library.length
 //  */
 // function beforeDeleteBook() {
-//     deleteBook()
+//     deleteBook();
 // }
 
 /**
