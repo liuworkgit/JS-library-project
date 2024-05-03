@@ -10,6 +10,7 @@ book2.indexnum = 1;
 book3.indexnum = 2;
 book4.indexnum = 3;
 book5.indexnum = 4;
+book5.isRead = true;
 library.push(book1, book2, book3, book4, book5);
 
 /**
@@ -18,14 +19,14 @@ library.push(book1, book2, book3, book4, book5);
  * @param {*} t - the title of the book
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
- * @field readStatus - whether or not the book has been read. By default this is false
+ * @field isRead - whether or not the book has been read. By default this is false
  * @field indexnum - the id number of the current book. By default this is 0
  */
 function Book(t, a, pn) {
     this.title = t;
     this.author = a;
     this.pageNum = pn;
-    this.readStatus = false;
+    this.isRead = false;
     this.indexnum = 0;
 }
 
@@ -79,41 +80,46 @@ function displayBooks() {
 function showBook(index) {
     const book = library[index];
 
-    // create div container and the book info paragraph that fits in it
+    // create div container, append to doc
     let newEntry = document.createElement("div");
-    let newEntryDesc = document.createElement("p");
-    let newDeleteButton = document.createElement("button");
-
-    if (book.readStatus == true) {
-        newEntryDesc.innerHTML = book.title + 
-        " - " + book.author + 
-        " - " + book.pageNum + 
-        " - has been read";
-    } else {
-        newEntryDesc.innerHTML = book.title + 
-        " - " + book.author + 
-        " - " + book.pageNum + 
-        " - hasn't been read";
-    }
-
-    // attach p to div
-    newEntry.appendChild(newEntryDesc);
-    newEntryDesc.className = "book-entry-text";
-
-    // attach div to document
-    document.getElementById("book-display").appendChild(newEntry);
     newEntry.className = "book-entry";
     newEntry.setAttribute("data-indexnum", book.indexnum);
+    document.getElementById("book-display").appendChild(newEntry);
 
-    // attach delete button to div
-    newEntry.appendChild(newDeleteButton);
+    // create book info p, append to div
+    let bookInfo = document.createElement("p");
+    bookInfo.className = "book-entry-text";
+    bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.pageNum;
+    newEntry.appendChild(bookInfo);
+
+    // create read status p, append to div
+    let readStatus = document.createElement("p");
+    readStatus.className = "read-status";
+    if (book.isRead == true) {
+        readStatus.innerHTML = "Has been read";
+    } else {
+        readStatus.innerHTML = "Hasn't been read";
+    }
+    newEntry.appendChild(readStatus);
+
+    // create delete button, append to div
+    let newDeleteButton = document.createElement("button");
     newDeleteButton.type = "button";
     newDeleteButton.className = "delete-button";
     newDeleteButton.innerHTML = "Delete Book";
     newDeleteButton.addEventListener("click", function () {
         deleteBook(this.parentElement.getAttribute("data-indexnum"));
         document.getElementById("book-display").removeChild(this.parentElement);
-    }, false);    
+    }, false);
+    newEntry.appendChild(newDeleteButton);
+
+    // create mark read button, append to div
+    let markReadButton = document.createElement("button");
+    markReadButton.type = "button";
+    markReadButton.className = "mark-read-button";
+    markReadButton.innerHTML = "Mark as Read";
+    // add event listener here
+    newEntry.appendChild(markReadButton);
 }
 
 /**
