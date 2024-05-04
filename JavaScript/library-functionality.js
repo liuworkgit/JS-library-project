@@ -39,6 +39,15 @@ Book.prototype.getIndexNum = function() {
 }
 
 /**
+ * Changes isRead to true if false and vice versa
+ */
+Book.prototype.changeIsRead = function() {
+    this.isRead = !this.isRead;
+}
+
+// ******************************************************************************
+
+/**
  * Converts user input into a Book object
  */
 function inputToObject() {
@@ -92,7 +101,7 @@ function showBook(index) {
     bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.pageNum;
     newEntry.appendChild(bookInfo);
 
-    // create read status p, append to div
+    // create read status p, append to div (is either "has been read" or "hasn't been read")
     let readStatus = document.createElement("p");
     readStatus.className = "read-status";
     if (book.isRead == true) {
@@ -118,7 +127,7 @@ function showBook(index) {
     markReadButton.type = "button";
     markReadButton.className = "mark-read-button";
     markReadButton.innerHTML = "Mark as Read";
-    // add event listener here
+    markReadButton.addEventListener("click", markAsRead, false);
     newEntry.appendChild(markReadButton);
 }
 
@@ -130,9 +139,6 @@ function showBook(index) {
 function beforeAddBook(event) {
     event.preventDefault();
     addBookToLibrary();
-    // not sure how to implement refreshing
-    // the library display each time a book is added.
-    // makes most sense to just call displayBooks again
     showBook(library.length - 1);
 }
 
@@ -145,14 +151,20 @@ function deleteBook(id) {
     library.splice(id, 1);
 }
 
-// /**
-//  * Gives deleteBook access to the associated book's id
-//  * so it can delete it.
-//  * Requires: 0 <= id < library.length
-//  */
-// function beforeDeleteBook() {
-//     deleteBook();
-// }
+/**
+ * Changes a book entry's read status from "Has been read"
+ * to "Hasn't been read" and vice versa
+ */
+function markAsRead() {
+    let readStatus = this.parentElement.querySelector(".read-status");
+    let curr = this.parentElement.getAttribute("data-indexnum");
+    if (readStatus.innerHTML == "Has been read") {
+        readStatus.innerHTML = "Hasn't been read";
+    } else {
+        readStatus.innerHTML = "Has been read";
+    }
+    library[curr].changeIsRead();
+}
 
 /**
  * get submit button from webpage form
