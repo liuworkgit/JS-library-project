@@ -1,11 +1,14 @@
 'use strict'
 
+// storage for books
 let library = [];
+
+// placeholder books for demonstration purposes.
 let book1 = new Book("Shadow of the Gods", "John Gwynne", 500);
 let book2 = new Book("Sun and Moon", "Bran Underwood", 1029);
-let book3 = new Book("Placeholder", "Placeholder", 123);
-let book4 = new Book("Placeholder", "Placeholder", 123);
-let book5 = new Book("Placeholder", "Placeholder", 123);
+let book3 = new Book("A Great Mystery", "John Doe", 5);
+let book4 = new Book("The Mask of Mirrors", "M. A. Carrick", 5000);
+let book5 = new Book("A Tale of Two Cities", "Jane Doe", 26);
 book2.indexnum = 1;
 book3.indexnum = 2;
 book4.indexnum = 3;
@@ -28,14 +31,6 @@ function Book(t, a, pn) {
     this.pageNum = pn;
     this.isRead = false;
     this.indexnum = 0;
-}
-
-/**
- * Defines an id number getter for the Book prototype
- * Returns the book's id number.
- */
-Book.prototype.getIndexNum = function() {
-    return this.indexnum;
 }
 
 /**
@@ -95,13 +90,12 @@ function showBook(index) {
     newEntry.setAttribute("data-indexnum", book.indexnum);
     document.getElementById("book-display").appendChild(newEntry);
 
-    // create book info p, append to div
+    // add book info and read status
     let bookInfo = document.createElement("p");
     bookInfo.className = "book-entry-text";
     bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.pageNum;
     newEntry.appendChild(bookInfo);
 
-    // create read status p, append to div (is either "has been read" or "hasn't been read")
     let readStatus = document.createElement("p");
     readStatus.className = "read-status";
     if (book.isRead == true) {
@@ -111,7 +105,7 @@ function showBook(index) {
     }
     newEntry.appendChild(readStatus);
 
-    // create delete button, append to div
+    // add delete button
     let newDeleteButton = document.createElement("button");
     newDeleteButton.type = "button";
     newDeleteButton.className = "delete-button";
@@ -122,7 +116,7 @@ function showBook(index) {
     }, false);
     newEntry.appendChild(newDeleteButton);
 
-    // create mark read button, append to div
+    // add mark read button
     let markReadButton = document.createElement("button");
     markReadButton.type = "button";
     markReadButton.className = "mark-read-button";
@@ -171,7 +165,7 @@ function markAsRead() {
  * give it an event listener that calls add book to library
  * use preventDefault to stop it from sending to server
  * we will assume that all form fields are filled in before
- * submission - implement later
+ * submission.
  */
 document.getElementById("submit-button").addEventListener("click", beforeAddBook, false);
 

@@ -19,4 +19,4 @@ I intend to implement these goals after the fundamental user stories have been c
 
 1. Optimize showBook's cohesion by splitting its functionality into separate functions, as it is currently handling multiple tasks, which is unnecessary and bad practice.
 2. Fix the "new book" form to the right of the page.
-3. Reformat the book entries so they look better.
+3. Reformat the book entries so they look better and allow the user to submit a book cover as well.
