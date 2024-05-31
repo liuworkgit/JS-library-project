@@ -3,6 +3,12 @@ This is a web app that allows the user to manage a collection of books.
 
 This project was made according to the specifications of [The Odin Project's Library Project, which you can access here.](https://www.theodinproject.com/lessons/node-path-javascript-library)
 
+## Status Update - May 31 2024
+I am currently beginning the process of revamping the code, by doing the following:
+1. Decouple the book creation process of showBook in library-functionality.js for better cohesion.
+2. Improving the UI and CSS of the webpage.
+3. Decoupling the application logic into separate JavaScript modules using factory functions and the module pattern.
+
 ## User Stories
 This project will have the following functionality:
 
