@@ -1,20 +1,6 @@
 'use strict'
 
-// storage for books
 let library = [];
-
-// placeholder books for demonstration purposes.
-let book1 = new Book("Shadow of the Gods", "John Gwynne", 500);
-let book2 = new Book("Sun and Moon", "Bran Underwood", 1029);
-let book3 = new Book("A Great Mystery", "John Doe", 5);
-let book4 = new Book("The Mask of Mirrors", "M. A. Carrick", 5000);
-let book5 = new Book("A Tale of Two Cities", "Jane Doe", 26);
-book2.indexnum = 1;
-book3.indexnum = 2;
-book4.indexnum = 3;
-book5.indexnum = 4;
-book5.isRead = true;
-library.push(book1, book2, book3, book4, book5);
 
 /**
  * object constructor for a book object
@@ -23,150 +9,191 @@ library.push(book1, book2, book3, book4, book5);
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
  * @field isRead - whether or not the book has been read. By default this is false
- * @field indexnum - the id number of the current book. By default this is 0
  */
 function Book(t, a, pn) {
     this.title = t;
     this.author = a;
     this.pageNum = pn;
     this.isRead = false;
-    this.indexnum = 0;
 }
 
 /**
  * Changes isRead to true if false and vice versa
  */
-Book.prototype.changeIsRead = function() {
+Book.prototype.changeIsRead = function () {
     this.isRead = !this.isRead;
 }
 
 // ******************************************************************************
 
 /**
- * Converts user input into a Book object
+ * Converts user input into a Book object.
+ * @returns Book
  */
-function inputToObject() {
+function inputToBook() {
     const form = document.getElementById("submit-form");
     const formData = new FormData(form);
-    console.log(formData);
+    console.log(`Successfully read form data - ${formData}`);
 
-    let book = new Book(formData.get("title"), formData.get("author"), formData.get("pageNum"));
-    book.indexnum = library.length;
+    let book = new Book(
+        formData.get("title"),
+        formData.get("author"),
+        formData.get("pageNum")
+    );
+    console.log(`Successfully made book - ${book}`);
     return book;
-}
+};
 
 /**
- * Adds a book to the library
+ * Adds a book to the library.
  */
-function addBookToLibrary() {
-    library.push(inputToObject());
-}
+function addBook() {
+    library.push(inputToBook());
+};
 
 /**
- * loops through the library array and displays
- * its contents on the webpage
+ * Displays the library on the webpage.
  */
-function displayBooks() {
+function showLibrary() {
     if (library != []) {
         for (let i = 0; i < library.length; i++) {
-            showBook(i);
-        }
-    }
-}
+            bookToHTML(i);
+        };
+    };
+};
 
 /**
- * Displays the book associated with the given index by converting
- * the JS object into an HTML element and adding it to the DOM.
- * REQUIREMENTS:
- * - library.length > 0
- * - index is within range [0, library.length]
+ * Converts a book to an HTML object.
+ * @requires library.length >= 0
+ * @requires index in [0, library.length)
  */
-function showBook(index) {
+function bookToHTML(index) {
     const book = library[index];
 
-    // create div container, append to doc
     let newEntry = document.createElement("div");
     newEntry.className = "book-entry";
-    newEntry.setAttribute("data-indexnum", book.indexnum);
+    newEntry.setAttribute("data-indexnum", index);
     document.getElementById("book-display").appendChild(newEntry);
 
-    // add book info and read status
+    addInfo(newEntry, book);
+    addReadStatus(newEntry, book);
+    addDeleteButton(newEntry);
+    addMarkReadButton(newEntry);
+};
+
+/**
+ * Adds a book's information to its display in the DOM.
+ * @param {HTMLDivElement} entry
+ * @param {Book} book
+ */
+function addInfo(entry, book) {
     let bookInfo = document.createElement("p");
     bookInfo.className = "book-entry-text";
     bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.pageNum;
-    newEntry.appendChild(bookInfo);
+    entry.appendChild(bookInfo);
+};
 
+/**
+ * Adds a book's read status to its display in the DOM.
+ * @param {HTMLDivElement} entry
+ * @param {Book} book
+ */
+function addReadStatus(entry, book) {
     let readStatus = document.createElement("p");
     readStatus.className = "read-status";
-    if (book.isRead == true) {
-        readStatus.innerHTML = "Has been read";
-    } else {
-        readStatus.innerHTML = "Hasn't been read";
-    }
-    newEntry.appendChild(readStatus);
-
-    // add delete button
-    let newDeleteButton = document.createElement("button");
-    newDeleteButton.type = "button";
-    newDeleteButton.className = "delete-button";
-    newDeleteButton.innerHTML = "Delete Book";
-    newDeleteButton.addEventListener("click", function () {
-        deleteBook(this.parentElement.getAttribute("data-indexnum"));
-        document.getElementById("book-display").removeChild(this.parentElement);
-    }, false);
-    newEntry.appendChild(newDeleteButton);
-
-    // add mark read button
-    let markReadButton = document.createElement("button");
-    markReadButton.type = "button";
-    markReadButton.className = "mark-read-button";
-    markReadButton.innerHTML = "Mark as Read";
-    markReadButton.addEventListener("click", markAsRead, false);
-    newEntry.appendChild(markReadButton);
-}
+    readStatus.innerHTML = (book.isRead) ? "Has been read" : "Hasn't been read";
+    entry.appendChild(readStatus);
+};
 
 /**
- * prevents the submission form from sending to a server
- * when a new book is submitted. This is because there is 
- * no server currently.
+ * Adds a delete button to a book's display in the DOM.
+ * @param {HTMLDivElement} entry
  */
-function beforeAddBook(event) {
+function addDeleteButton(entry) {
+    let button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "delete-button";
+    button.innerHTML = "Delete Book";
+
+    button.addEventListener("click", function () {
+        whileDeleteBook(this.parentElement);
+    }, false);
+
+    entry.appendChild(button);
+};
+
+/**
+ * Adds a "mark as read" button to a book's display in the DOM.
+ * @param {HTMLDivElement} entry
+ */
+function addMarkReadButton(entry) {
+    let button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "mark-read-button";
+    button.innerHTML = "Mark as Read";
+
+    button.addEventListener("click", markAsRead, false);
+
+    entry.appendChild(button);
+};
+
+/**
+ * Prevents the form from sending to the server so the book can be added to
+ * the client instead.
+ * @param {Event} event
+ */
+function whileAddBook(event) {
     event.preventDefault();
-    addBookToLibrary();
-    showBook(library.length - 1);
+    addBook();
+    bookToHTML(library.length - 1);
 }
 
 /**
- * Deletes the book associated with the given id number from
- * the library.
- * Requires: 0 <= id < library.length
+ * Ensures the display is updated after a book's deletion.
+ * @param {HTMLDivElement} toDelete
+ */
+function whileDeleteBook(toDelete) {
+    const toDelId = Number(toDelete.getAttribute("data-indexnum"));
+    deleteBook(toDelId);
+    document.getElementById("book-display").removeChild(toDelete);
+    updateDOM(toDelId);
+};
+
+/**
+ * Updates the DOM's appearance after a book has been deleted.
+ * @param {Number} toDelId
+ */
+function updateDOM(toDelId) {
+    let bookList = document.getElementsByClassName("book-entry");
+    for (let i = toDelId + 1; i < bookList.length - 1; i++) {
+        bookList[i].setAttribute("data-indexnum", i + 1);
+    };
+};
+
+/**
+ * Deletes the book at index id from the library.
+ * @requires 0 <= id < library.length
  */
 function deleteBook(id) {
     library.splice(id, 1);
-}
+};
 
 /**
- * Changes a book entry's read status from "Has been read"
- * to "Hasn't been read" and vice versa
+ * Changes a book entry's read status.
  */
 function markAsRead() {
     let readStatus = this.parentElement.querySelector(".read-status");
     let curr = this.parentElement.getAttribute("data-indexnum");
-    if (readStatus.innerHTML == "Has been read") {
-        readStatus.innerHTML = "Hasn't been read";
-    } else {
-        readStatus.innerHTML = "Has been read";
-    }
+
+    readStatus.innerHTML = (readStatus.innerHTML == "Has been read") ? "Hasn't been read" : "Has been read";
     library[curr].changeIsRead();
-}
+};
 
 /**
- * get submit button from webpage form
- * give it an event listener that calls add book to library
- * use preventDefault to stop it from sending to server
- * we will assume that all form fields are filled in before
- * submission.
+ * Adds event listener to submit button of new book form.
  */
-document.getElementById("submit-button").addEventListener("click", beforeAddBook, false);
+document.getElementById("submit-button").addEventListener("click", whileAddBook, false);
 
-displayBooks();
+showLibrary();
