@@ -9,20 +9,22 @@ let library = [];
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
  * @field isRead - whether or not the book has been read. By default this is false
+ * @field id - a unique identified produced by Date.now() at the book's creation.
  */
 function Book(t, a, pn) {
     this.title = t;
     this.author = a;
     this.pageNum = pn;
     this.isRead = false;
-}
+    this.id = Date.now();
+};
 
 /**
  * Changes isRead to true if false and vice versa
  */
 Book.prototype.changeIsRead = function () {
     this.isRead = !this.isRead;
-}
+};
 
 // ******************************************************************************
 
@@ -52,6 +54,30 @@ function addBook() {
 };
 
 /**
+ * Deletes the book at index id from the library.
+ * @param {Number} id - the id of the book to delete.
+ * @requires 0 <= id < library.length
+ */
+function deleteBook(id) {
+    library.splice(findBook(id), 1);
+};
+
+/**
+ * Returns the index of the book with the given id.
+ * @param {Number} id - the id of the book to find.
+ * @returns Number
+ */
+function findBook(id) {
+    if (library != []) {
+        for (let i = 0; i < library.length; i++) {
+            if (library[i].id == id) {
+                return i;
+            };
+        };
+    };
+};
+
+/**
  * Displays the library on the webpage.
  */
 function showLibrary() {
@@ -64,15 +90,16 @@ function showLibrary() {
 
 /**
  * Converts a book to an HTML object.
- * @requires library.length >= 0
- * @requires index in [0, library.length)
+ * @param {Number} index - index of the book to be deleted.
+ * @requires library.length > 0
+ * @requires 0 <= index < library.length
  */
 function bookToHTML(index) {
     const book = library[index];
 
     let newEntry = document.createElement("div");
     newEntry.className = "book-entry";
-    newEntry.setAttribute("data-indexnum", index);
+    newEntry.setAttribute("data-id", book.id);
     document.getElementById("book-display").appendChild(newEntry);
 
     addInfo(newEntry, book);
@@ -116,9 +143,7 @@ function addDeleteButton(entry) {
     button.className = "delete-button";
     button.innerHTML = "Delete Book";
 
-    button.addEventListener("click", function () {
-        whileDeleteBook(this.parentElement);
-    }, false);
+    button.addEventListener("click", whileDeleteBook, false);
 
     entry.appendChild(button);
 };
@@ -148,47 +173,25 @@ function whileAddBook(event) {
     event.preventDefault();
     addBook();
     bookToHTML(library.length - 1);
+};
+
+/**
+ * Deletes the book from the library and the DOM.
+ */
+function whileDeleteBook() {
+    deleteBook(Number(this.parentElement.getAttribute("data-id")));
+    document.getElementById("book-display").removeChild(this.parentElement);
 }
 
 /**
- * Ensures the display is updated after a book's deletion.
- * @param {HTMLDivElement} toDelete
- */
-function whileDeleteBook(toDelete) {
-    const toDelId = Number(toDelete.getAttribute("data-indexnum"));
-    deleteBook(toDelId);
-    document.getElementById("book-display").removeChild(toDelete);
-    updateDOM(toDelId);
-};
-
-/**
- * Updates the DOM's appearance after a book has been deleted.
- * @param {Number} toDelId
- */
-function updateDOM(toDelId) {
-    let bookList = document.getElementsByClassName("book-entry");
-    for (let i = toDelId + 1; i < bookList.length - 1; i++) {
-        bookList[i].setAttribute("data-indexnum", i + 1);
-    };
-};
-
-/**
- * Deletes the book at index id from the library.
- * @requires 0 <= id < library.length
- */
-function deleteBook(id) {
-    library.splice(id, 1);
-};
-
-/**
- * Changes a book entry's read status.
+ * Changes a book's read status.
  */
 function markAsRead() {
     let readStatus = this.parentElement.querySelector(".read-status");
-    let curr = this.parentElement.getAttribute("data-indexnum");
-
     readStatus.innerHTML = (readStatus.innerHTML == "Has been read") ? "Hasn't been read" : "Has been read";
-    library[curr].changeIsRead();
+
+    let index = findBook(this.parentElement.getAttribute("data-id"));
+    library[index].changeIsRead();
 };
 
 /**
