@@ -3,27 +3,77 @@
 let library = [];
 
 /**
- * object constructor for a book object
+ * @class Book
  * 
- * @param {*} t - the title of the book
- * @param {*} a - the author of the book
- * @param {*} pn - the number of pages in the book
- * @field isRead - whether or not the book has been read. By default this is false
- * @field id - a unique id produced by Date.now() at the book's creation.
+ * represents a book.
  */
-function Book(t, a, pn) {
-    this.title = t;
-    this.author = a;
-    this.pageNum = pn;
-    this.isRead = false;
-    this.id = Date.now();
-};
+class Book {
+    /**
+     * Constructor for a Book.
+     * 
+     * @param {String} title - The title of the book.
+     * @param {String} author - The author of the book.
+     * @param {Number} numPage - The number of pages in the book.
+     * @var {boolean} isRead - Whether the book has been read. By default this is false.
+     * @var {Number} id - A unique id produced by Date.now() at the book's creation.
+     */
+    constructor(title, author, numPage) {
+        this.title = title;
+        this.author = author;
+        this.numPage = numPage;
+        this.isRead = false;
+        this.id = Date.now();
+    };
 
-/**
- * Changes isRead to true if false, and vice versa.
- */
-Book.prototype.changeIsRead = function () {
-    this.isRead = !this.isRead;
+    /**
+     * Changes isRead to true if false, and vice versa.
+     */
+    changeIsRead() {
+        this.isRead = !this.isRead;
+    };
+
+    /**
+     * Prints a book's info to the console.
+     */
+    printInfo() {
+        console.log(this);
+    };
+
+    // Getters and Setters
+    get title() {
+        return this._title;
+    };
+    set title(newTitle) {
+        this._title = newTitle;
+    };
+
+    get author() {
+        return this._author;
+    };
+    set author(newAuthor) {
+        this._author = newAuthor;
+    };
+
+    get numPage() {
+        return this._numPage;
+    };
+    set numPage(newNumPage) {
+        this._numPage = newNumPage;
+    };
+
+    get isRead() {
+        return this._isRead;
+    };
+    set isRead(newIsRead) {
+        this._isRead = newIsRead;
+    };
+    
+    get id() {
+        return this._id;
+    };
+    set id(newId) {
+        this._id = newId;
+    };
 };
 
 // ******************************************************************************
@@ -40,9 +90,9 @@ function inputToBook() {
     let book = new Book(
         formData.get("title"),
         formData.get("author"),
-        formData.get("pageNum")
+        formData.get("numPage")
     );
-    console.log(`Successfully made book - ${book}`);
+    console.log(`Successfully made book - ${book.printInfo()}`);
     return book;
 };
 
@@ -116,7 +166,7 @@ function bookToHTML(index) {
 function addInfo(entry, book) {
     let bookInfo = document.createElement("p");
     bookInfo.className = "book-entry-text";
-    bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.pageNum;
+    bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.numPage;
     entry.appendChild(bookInfo);
 };
 
