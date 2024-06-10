@@ -9,7 +9,7 @@ let library = [];
  * @param {*} a - the author of the book
  * @param {*} pn - the number of pages in the book
  * @field isRead - whether or not the book has been read. By default this is false
- * @field id - a unique identified produced by Date.now() at the book's creation.
+ * @field id - a unique id produced by Date.now() at the book's creation.
  */
 function Book(t, a, pn) {
     this.title = t;
@@ -20,7 +20,7 @@ function Book(t, a, pn) {
 };
 
 /**
- * Changes isRead to true if false and vice versa
+ * Changes isRead to true if false, and vice versa.
  */
 Book.prototype.changeIsRead = function () {
     this.isRead = !this.isRead;
@@ -29,7 +29,7 @@ Book.prototype.changeIsRead = function () {
 // ******************************************************************************
 
 /**
- * Converts user input into a Book object.
+ * Converts submission form input into a Book object.
  * @returns Book
  */
 function inputToBook() {
@@ -54,7 +54,7 @@ function addBook() {
 };
 
 /**
- * Deletes the book at index id from the library.
+ * Deletes the book identified by id from the library.
  * @param {Number} id - the id of the book to delete.
  * @requires 0 <= id < library.length
  */
@@ -90,7 +90,7 @@ function showLibrary() {
 
 /**
  * Converts a book to an HTML object.
- * @param {Number} index - index of the book to be deleted.
+ * @param {Number} index - index of the book to be converted.
  * @requires library.length > 0
  * @requires 0 <= index < library.length
  */
@@ -110,8 +110,8 @@ function bookToHTML(index) {
 
 /**
  * Adds a book's information to its display in the DOM.
- * @param {HTMLDivElement} entry
- * @param {Book} book
+ * @param {HTMLDivElement} entry - the book's display to modify
+ * @param {Book} book - the book to get info from
  */
 function addInfo(entry, book) {
     let bookInfo = document.createElement("p");
@@ -122,8 +122,8 @@ function addInfo(entry, book) {
 
 /**
  * Adds a book's read status to its display in the DOM.
- * @param {HTMLDivElement} entry
- * @param {Book} book
+ * @param {HTMLDivElement} entry - the book's display to modify
+ * @param {Book} book - the book to get info from
  */
 function addReadStatus(entry, book) {
     let readStatus = document.createElement("p");
@@ -134,7 +134,7 @@ function addReadStatus(entry, book) {
 
 /**
  * Adds a delete button to a book's display in the DOM.
- * @param {HTMLDivElement} entry
+ * @param {HTMLDivElement} entry - the book's display to modify
  */
 function addDeleteButton(entry) {
     let button = document.createElement("button");
@@ -150,7 +150,7 @@ function addDeleteButton(entry) {
 
 /**
  * Adds a "mark as read" button to a book's display in the DOM.
- * @param {HTMLDivElement} entry
+ * @param {HTMLDivElement} entry - the book's display to modify
  */
 function addMarkReadButton(entry) {
     let button = document.createElement("button");
@@ -159,15 +159,14 @@ function addMarkReadButton(entry) {
     button.className = "mark-read-button";
     button.innerHTML = "Mark as Read";
 
-    button.addEventListener("click", markAsRead, false);
+    button.addEventListener("click", whileMarkRead, false);
 
     entry.appendChild(button);
 };
 
 /**
- * Prevents the form from sending to the server so the book can be added to
- * the client instead.
- * @param {Event} event
+ * Prevents the form from sending to the server as there is no server.
+ * @param {Event} event - the action which triggers addBook
  */
 function whileAddBook(event) {
     event.preventDefault();
@@ -176,17 +175,17 @@ function whileAddBook(event) {
 };
 
 /**
- * Deletes the book from the library and the DOM.
+ * Ensures the book is deleted from the library and the DOM.
  */
 function whileDeleteBook() {
     deleteBook(Number(this.parentElement.getAttribute("data-id")));
     document.getElementById("book-display").removeChild(this.parentElement);
-}
+};
 
 /**
- * Changes a book's read status.
+ * Changes a book's read status in the library and the DOM.
  */
-function markAsRead() {
+function whileMarkRead() {
     let readStatus = this.parentElement.querySelector(".read-status");
     readStatus.innerHTML = (readStatus.innerHTML == "Has been read") ? "Hasn't been read" : "Has been read";
 
@@ -195,8 +194,6 @@ function markAsRead() {
 };
 
 /**
- * Adds event listener to submit button of new book form.
+ * Adds an EventListener to the submit button of the submission form.
  */
 document.getElementById("submit-button").addEventListener("click", whileAddBook, false);
-
-showLibrary();
