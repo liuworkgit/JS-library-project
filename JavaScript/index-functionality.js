@@ -33,10 +33,11 @@ class Book {
     };
 
     /**
-     * Prints a book's info to the console.
+     * Returns a book's info as a string.
+     * @returns String
      */
-    printInfo() {
-        console.log(this);
+    getInfo() {
+        return `{ ${this.title}, ${this.author}, ${this.numPage}, ${this.isRead}, ${this.id} }`;
     };
 
     // Getters and Setters
@@ -67,7 +68,7 @@ class Book {
     set isRead(newIsRead) {
         this._isRead = newIsRead;
     };
-    
+
     get id() {
         return this._id;
     };
@@ -85,14 +86,14 @@ class Book {
 function inputToBook() {
     const form = document.getElementById("submit-form");
     const formData = new FormData(form);
-    console.log(`Successfully read form data - ${formData}`);
 
     let book = new Book(
         formData.get("title"),
         formData.get("author"),
         formData.get("numPage")
     );
-    console.log(`Successfully made book - ${book.printInfo()}`);
+    console.log(`Successfully made new book ${book.getInfo()}.`);
+
     return book;
 };
 
@@ -101,6 +102,7 @@ function inputToBook() {
  */
 function addBook() {
     library.push(inputToBook());
+    console.log(`Added book ${library[library.length - 1].getInfo()} to library.`);
 };
 
 /**
@@ -109,7 +111,8 @@ function addBook() {
  * @requires 0 <= id < library.length
  */
 function deleteBook(id) {
-    library.splice(findBook(id), 1);
+    const deleted = library.splice(findBook(id), 1);
+    console.log(`Removed book ${deleted[0].getInfo()} from library.`);
 };
 
 /**
@@ -139,7 +142,7 @@ function showLibrary() {
 };
 
 /**
- * Converts a book to an HTML object.
+ * Converts a Book to an HTML object and adds it to the DOM.
  * @param {Number} index - index of the book to be converted.
  * @requires library.length > 0
  * @requires 0 <= index < library.length
@@ -150,12 +153,14 @@ function bookToHTML(index) {
     let newEntry = document.createElement("div");
     newEntry.className = "book-entry";
     newEntry.setAttribute("data-id", book.id);
-    document.getElementById("book-display").appendChild(newEntry);
 
     addInfo(newEntry, book);
     addReadStatus(newEntry, book);
     addDeleteButton(newEntry);
     addMarkReadButton(newEntry);
+
+    document.getElementById("book-display").appendChild(newEntry);
+    console.log(`Created new entry for book ${book.getInfo()}.`);
 };
 
 /**
@@ -172,8 +177,8 @@ function addInfo(entry, book) {
 
 /**
  * Adds a book's read status to its display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify
- * @param {Book} book - the book to get info from
+ * @param {HTMLDivElement} entry - the book's display to modify.
+ * @param {Book} book - the book to get info from.
  */
 function addReadStatus(entry, book) {
     let readStatus = document.createElement("p");
@@ -184,7 +189,7 @@ function addReadStatus(entry, book) {
 
 /**
  * Adds a delete button to a book's display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify
+ * @param {HTMLDivElement} entry - the book's display to modify.
  */
 function addDeleteButton(entry) {
     let button = document.createElement("button");
@@ -200,7 +205,7 @@ function addDeleteButton(entry) {
 
 /**
  * Adds a "mark as read" button to a book's display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify
+ * @param {HTMLDivElement} entry - the book's display to modify.
  */
 function addMarkReadButton(entry) {
     let button = document.createElement("button");
@@ -216,7 +221,7 @@ function addMarkReadButton(entry) {
 
 /**
  * Prevents the form from sending to the server as there is no server.
- * @param {Event} event - the action which triggers addBook
+ * @param {Event} event - the action which triggers addBook.
  */
 function whileAddBook(event) {
     event.preventDefault();
