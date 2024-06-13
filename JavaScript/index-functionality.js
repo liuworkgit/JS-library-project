@@ -16,13 +16,15 @@ class Book {
      * @param {Number} numPage - The number of pages in the book.
      * @var {boolean} isRead - Whether the book has been read. By default this is false.
      * @var {Number} id - A unique id produced by Date.now() at the book's creation.
+     * @param {String} coverLink - The filepath to the book's cover. By default this is the placeholder image.
      */
-    constructor(title, author, numPage) {
+    constructor(title, author, numPage, coverLink) {
         this.title = title;
         this.author = author;
         this.numPage = numPage;
         this.isRead = false;
         this.id = Date.now();
+        this.coverLink = coverLink;
     };
 
     /**
@@ -74,6 +76,13 @@ class Book {
     };
     set id(newId) {
         this._id = newId;
+    };
+
+    get coverLink() {
+        return this._coverLink;
+    };
+    set coverLink(newCover) {
+        this._coverLink = newCover;
     };
 };
 
