@@ -1,42 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link href="CSS/index-style.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
     <noscript>Please enable JavaScript for full functionality, thank you.</noscript>
-
+    
     <h1>Library</h1>
     <div id="main-content">
-        <div id="book-display">
-            <div class="book-entry" class="unread" data-id="1718067470718">
-                <div class="book-entry-cover">
-                    <img src="Assets/Placeholder-cover.png" alt="Cover of Title by Author." width="150px"
-                        height="190px">
-                </div>
-                <div class="book-entry-info">
-                    <h3 class="book-title">Title</h3>
-                    <p class="book-author">Author</p>
-                    <p class="book-numpage">100 Pages</p>
-                </div>
-                <div class="book-entry-buttons">
-                    <button class="delete-button" type="button">Delete Book</button>
-                    <button class="mark-read-button" type="button">Mark as Read</button>
-                </div>
-            </div>
-        </div>
+        <div id="book-display"></div>
         <div id="new-book-submit">
             <form id="submit-form">
                 <fieldset>
                     <legend>New Book</legend>
-                    <p>Title: <input type="text" name="title" value="Untitled"></p>
-                    <p>Author: <input type="text" name="author" value="Unknown Author"></p>
-                    <p>Number of pages: <input type="number" name="numPage" value="0"></p>
+                    <p>Title: <input type="text" name="title"></p>
+                    <p>Author: <input type="text" name="author"></p>
+                    <p>Number of pages: <input type="number" name="numPage"></p>
                     <button id="submit-button" type="submit">Add</button>
                 </fieldset>
             </form>
@@ -45,5 +27,4 @@
 
     <script src="JavaScript/index-functionality.js"></script>
 </body>
-
 </html>
