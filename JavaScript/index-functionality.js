@@ -99,7 +99,10 @@ function inputToBook() {
     let book = new Book(
         formData.get("title"),
         formData.get("author"),
-        formData.get("numPage")
+        formData.get("numPage"),
+        "/Users/sen/Desktop/COMPUTER STUFF/webdev/js library project/Assets/Placeholder-cover.png"
+        // note: the above value is a placeholder until image uploading
+        // can be implemented
     );
     console.log(`Successfully made new book ${book.getInfo()}.`);
 
