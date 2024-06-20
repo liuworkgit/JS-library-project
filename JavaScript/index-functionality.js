@@ -161,12 +161,13 @@ function bookToHTML(index) {
 
     let newEntry = document.createElement("div");
     newEntry.className = "book-entry";
+    setReadStatus(newEntry, book); // TODO - ADD
     newEntry.setAttribute("data-id", book.id);
 
+    addCover(newEntry, book); // TODO - ADD
     addInfo(newEntry, book);
-    addReadStatus(newEntry, book);
-    addDeleteButton(newEntry);
-    addMarkReadButton(newEntry);
+    addReadStatus(newEntry, book); // TODO - REMOVE
+    addButtons(newEntry); // TODO - ADD
 
     document.getElementById("book-display").appendChild(newEntry);
     console.log(`Created new entry for book ${book.getInfo()}.`);
