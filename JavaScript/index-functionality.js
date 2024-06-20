@@ -16,15 +16,15 @@ class Book {
      * @param {Number} numPage - The number of pages in the book.
      * @var {boolean} isRead - Whether the book has been read. By default this is false.
      * @var {Number} id - A unique id produced by Date.now() at the book's creation.
-     * @param {String} coverLink - The filepath to the book's cover. By default this is the placeholder image.
+     * @var {String} coverLink - The filepath to the book's cover. By default this is the placeholder image.
      */
-    constructor(title, author, numPage, coverLink) {
+    constructor(title, author, numPage) {
         this.title = title;
         this.author = author;
         this.numPage = numPage;
         this.isRead = false;
         this.id = Date.now();
-        this.coverLink = coverLink;
+        this.coverLink = "Assets/Placeholder-cover.png";
     };
 
     /**
@@ -99,10 +99,7 @@ function inputToBook() {
     let book = new Book(
         formData.get("title"),
         formData.get("author"),
-        formData.get("numPage"),
-        "/Users/sen/Desktop/COMPUTER STUFF/webdev/js library project/Assets/Placeholder-cover.png"
-        // note: the above value is a placeholder until image uploading
-        // can be implemented
+        formData.get("numPage")
     );
     console.log(`Successfully made new book ${book.getInfo()}.`);
 

@@ -3,11 +3,8 @@ This is a web app that allows the user to manage a collection of books.
 
 This project was made according to the specifications of [The Odin Project's Library Project, which you can access here.](https://www.theodinproject.com/lessons/node-path-javascript-library)
 
-## Status Update - May 31 2024
-I am currently beginning the process of revamping the code, by doing the following:
-1. Decouple the book creation process of showBook in library-functionality.js for better cohesion.
-2. Improving the UI and CSS of the webpage.
-3. Decoupling the application logic into separate JavaScript modules using factory functions and the module pattern.
+## Status Update - June 20 2024
+The current goal is to **refactor the object parsing function so it matches with the new entry format.** After, I will begin **updating the design and visuals of the website.**
 
 ## User Stories
 This project will have the following functionality:
@@ -21,7 +18,7 @@ This project will have the following functionality:
 4. Users will be able to mark a book as read or unread by pressing a button beside a book's listing.
 
 ## Future Goals
-I intend to implement these goals after the fundamental user stories have been completed.
-
+I intend to implement these goals after the fundamental user stories have been completed:
 1. Fix the "new book" form to the right of the page.
-2. Reformat the book entries so they look better and allow the user to submit a book cover as well.
+2. Set up server support to allow users to upload books to a server.
+3. Allow users to upload book covers.
