@@ -152,7 +152,7 @@ function showLibrary() {
 
 /**
  * Converts a Book to an HTML object and adds it to the DOM.
- * @param {Number} index - index of the book to be converted.
+ * @param {Number} index The index of the book to be converted.
  * @requires library.length > 0
  * @requires 0 <= index < library.length
  */
@@ -174,9 +174,23 @@ function bookToHTML(index) {
 };
 
 /**
+ * Adds a book's read status to its DOM entry as an attribute.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
+ * @param {Book} book The book to be parsed.
+ */
+function setReadStatus(entry, book) {};
+
+/**
+ * Adds a book's cover to its DOM entry.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
+ * @param {Book} book The book to be parsed.
+ */
+function addCover(entry, book) {};
+
+/**
  * Adds a book's information to its display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify
- * @param {Book} book - the book to get info from
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
+ * @param {Book} book The book to be parsed.
  */
 function addInfo(entry, book) {
     let bookInfo = document.createElement("p");
@@ -187,8 +201,8 @@ function addInfo(entry, book) {
 
 /**
  * Adds a book's read status to its display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify.
- * @param {Book} book - the book to get info from.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
+ * @param {Book} book The book to be parsed.
  */
 function addReadStatus(entry, book) {
     let readStatus = document.createElement("p");
@@ -199,7 +213,7 @@ function addReadStatus(entry, book) {
 
 /**
  * Adds a delete button to a book's display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  */
 function addDeleteButton(entry) {
     let button = document.createElement("button");
@@ -215,7 +229,7 @@ function addDeleteButton(entry) {
 
 /**
  * Adds a "mark as read" button to a book's display in the DOM.
- * @param {HTMLDivElement} entry - the book's display to modify.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  */
 function addMarkReadButton(entry) {
     let button = document.createElement("button");
@@ -227,6 +241,15 @@ function addMarkReadButton(entry) {
     button.addEventListener("click", whileMarkRead, false);
 
     entry.appendChild(button);
+};
+
+/**
+ * Adds the mark read and delete buttons to a book's DOM entry.
+ * @param {HTMLDivElement} entry The book's associated entry in the DOM.
+ */
+function addButtons(entry) {
+    addDeleteButton(newEntry);
+    addMarkReadButton(newEntry);
 };
 
 /**
