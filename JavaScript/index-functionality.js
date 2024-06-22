@@ -99,7 +99,7 @@ function inputToBook() {
     let book = new Book(
         formData.get("title"),
         formData.get("author"),
-        formData.get("numPage")
+        formData.get("num-page")
     );
     console.log(`Successfully made new book ${book.getInfo()}.`);
 
@@ -164,8 +164,8 @@ function bookToHTML(index) {
     newEntry.setAttribute("data-id", book.id);
     setReadStatus(newEntry, book);
 
-    addCover(newEntry, book); // TODO - ADD
-    addInfo(newEntry, book);
+    addCover(newEntry, book);
+    addInfo(newEntry, book); // TODO - REVAMP
     addReadStatus(newEntry, book); // TODO - REMOVE
     addButtons(newEntry); // TODO - ADD
 
@@ -207,10 +207,29 @@ function addCover(entry, book) {
  * @param {Book} book The book to be parsed.
  */
 function addInfo(entry, book) {
-    let bookInfo = document.createElement("p");
-    bookInfo.className = "book-entry-text";
-    bookInfo.innerHTML = book.title + " - " + book.author + " - " + book.numPage;
-    entry.appendChild(bookInfo);
+    let infoDiv = document.createElement("div");
+    infoDiv.className = "book-entry-info";
+
+    let title = makeHTML("h3", "title", book.title);
+    let author = makeHTML("p", "author", book.author);
+    let numPage = makeHTML("p", "num-page", book.numPage);
+
+    infoDiv.append(title, author, numPage);
+    entry.appendChild(infoDiv);
+};
+
+/**
+ * Creates HTML elements with the type, class and content.
+ * @param {String} type_ The type of the element to be made.
+ * @param {String} class_ The class of the element to be made.
+ * @param {String} content_ The content between the element's tags.
+ * @returns HTMLElement
+ */
+function makeHTML(type_, class_, content_) {
+    let e = document.createElement(type_);
+    e.className = class_;
+    e.innerHTML = content_;
+    return e;
 };
 
 /**
