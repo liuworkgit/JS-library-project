@@ -165,9 +165,8 @@ function bookToHTML(index) {
     setReadStatus(newEntry, book);
 
     addCover(newEntry, book);
-    addInfo(newEntry, book); // TODO - REVAMP
-    addReadStatus(newEntry, book); // TODO - REMOVE
-    addButtons(newEntry); // TODO - ADD
+    addInfo(newEntry, book);
+    addButtons(newEntry);
 
     document.getElementById("book-display").appendChild(newEntry);
     console.log(`Created new entry for book ${book.getInfo()}.`);
@@ -233,18 +232,6 @@ function makeHTML(type_, class_, content_) {
 };
 
 /**
- * Adds a book's read status to its display in the DOM.
- * @param {HTMLDivElement} entry The book's associated entry in the DOM.
- * @param {Book} book The book to be parsed.
- */
-function addReadStatus(entry, book) {
-    let readStatus = document.createElement("p");
-    readStatus.className = "read-status";
-    readStatus.innerHTML = (book.isRead) ? "Has been read" : "Hasn't been read";
-    entry.appendChild(readStatus);
-};
-
-/**
  * Adds a delete button to a book's display in the DOM.
  * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  */
@@ -281,8 +268,13 @@ function addMarkReadButton(entry) {
  * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  */
 function addButtons(entry) {
-    addDeleteButton(entry);
-    addMarkReadButton(entry);
+    let buttonDiv = document.createElement("div");
+    buttonDiv.className = "book-entry-buttons";
+
+    addDeleteButton(buttonDiv);
+    addMarkReadButton(buttonDiv);
+
+    entry.appendChild(buttonDiv);
 };
 
 /**
