@@ -5,7 +5,7 @@ let library = [];
 /**
  * @class Book
  * 
- * represents a book.
+ * Represents a book.
  */
 class Book {
     /**
@@ -161,8 +161,8 @@ function bookToHTML(index) {
 
     let newEntry = document.createElement("div");
     newEntry.className = "book-entry";
-    setReadStatus(newEntry, book); // TODO - ADD
     newEntry.setAttribute("data-id", book.id);
+    setReadStatus(newEntry, book);
 
     addCover(newEntry, book); // TODO - ADD
     addInfo(newEntry, book);
@@ -178,14 +178,28 @@ function bookToHTML(index) {
  * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  * @param {Book} book The book to be parsed.
  */
-function setReadStatus(entry, book) {};
+function setReadStatus(entry, book) {
+    entry.className += (book.isRead) ? " read" : " unread";
+};
 
 /**
  * Adds a book's cover to its DOM entry.
  * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  * @param {Book} book The book to be parsed.
  */
-function addCover(entry, book) {};
+function addCover(entry, book) {
+    let coverDiv = document.createElement("div");
+    coverDiv.className = "book-entry-cover";
+    
+    let cover = document.createElement("img");
+    cover.setAttribute("src", book.coverLink); // currently placeholder
+    cover.setAttribute("alt", `Cover of ${book.title} by ${book.author}`);
+    cover.setAttribute("width", "150px");
+    cover.setAttribute("height", "190px");
+
+    coverDiv.appendChild(cover);
+    entry.appendChild(coverDiv);
+};
 
 /**
  * Adds a book's information to its display in the DOM.
@@ -248,8 +262,8 @@ function addMarkReadButton(entry) {
  * @param {HTMLDivElement} entry The book's associated entry in the DOM.
  */
 function addButtons(entry) {
-    addDeleteButton(newEntry);
-    addMarkReadButton(newEntry);
+    addDeleteButton(entry);
+    addMarkReadButton(entry);
 };
 
 /**
