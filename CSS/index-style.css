@@ -1,17 +1,16 @@
-* {
-    font-family: Cambria;
+body {
+    margin: 0;
 }
 
-#book-display {
-    width: 80%;
+header {
+    background-color: aquamarine;
+    width: 100%;
+
+    /* margin-top: 0;
+    margin-left: 0;
+    margin-right: 0; */
 }
 
-#new-book-submission {
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-
-.book-entry > * {
-    display: inline-block;
+header>h1 {
+    margin: 0;
 }
