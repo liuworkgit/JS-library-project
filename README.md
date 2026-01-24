@@ -1,5 +1,5 @@
 # JS Library Project
-This is a web app that allows the user to manage a collection of books.
+This is a website that allows the user to manage a collection of books.
 
 This project was made according to the specifications of [The Odin Project's Library Project, which you can access here.](https://www.theodinproject.com/lessons/node-path-javascript-library)
 
@@ -17,6 +17,6 @@ This project will have the following functionality:
 ## Future Goals
 I intend to implement these goals after the fundamental user stories have been completed:
 1. Fix the "new book" form to the right of the page.
-2. Set up server and database support to allow users to upload books to a server.
+2. Set up server support to allow users to upload books, and implement persistent storage.
 3. Allow users to upload book covers.
 4. Add statistics, such as number of books read or unread.
