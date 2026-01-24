@@ -16,7 +16,6 @@ class Book {
      * @param {Number} numPage - The number of pages in the book.
      * @var {boolean} isRead - Whether the book has been read. By default this is false.
      * @var {Number} id - A unique id produced by Date.now() at the book's creation.
-     * @var {String} coverLink - The filepath to the book's cover. By default this is the placeholder image.
      */
     constructor(title, author, numPage) {
         this.title = title;
@@ -24,7 +23,6 @@ class Book {
         this.numPage = numPage;
         this.isRead = false;
         this.id = Date.now();
-        this.coverLink = "/Users/sen/Desktop/COMPUTER STUFF/webdev/js library project/Assets/Placeholder-cover.png";
     };
 
     /**
@@ -76,13 +74,6 @@ class Book {
     };
     set id(newId) {
         this._id = newId;
-    };
-
-    get coverLink() {
-        return this._coverLink;
-    };
-    set coverLink(newCover) {
-        this._coverLink = newCover;
     };
 };
 
@@ -164,7 +155,6 @@ function bookToHTML(index) {
     newEntry.setAttribute("data-id", book.id);
     setReadStatus(newEntry, book);
 
-    addCover(newEntry, book);
     addInfo(newEntry, book);
     addButtons(newEntry);
 
@@ -179,25 +169,6 @@ function bookToHTML(index) {
  */
 function setReadStatus(entry, book) {
     entry.className += (book.isRead) ? " read" : " unread";
-};
-
-/**
- * Adds a book's cover to its DOM entry.
- * @param {HTMLDivElement} entry The book's associated entry in the DOM.
- * @param {Book} book The book to be parsed.
- */
-function addCover(entry, book) {
-    let coverDiv = document.createElement("div");
-    coverDiv.className = "book-entry-cover";
-    
-    let cover = document.createElement("img");
-    cover.setAttribute("src", book.coverLink); // currently placeholder
-    cover.setAttribute("alt", `Cover of ${book.title} by ${book.author}`);
-    cover.setAttribute("width", "150px");
-    cover.setAttribute("height", "190px");
-
-    coverDiv.appendChild(cover);
-    entry.appendChild(coverDiv);
 };
 
 /**
